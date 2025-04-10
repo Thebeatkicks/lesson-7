@@ -39,7 +39,11 @@ let randomWord;
 let score = 0;
 
 //Initializing time
+
 let time = 10;
+
+//diffiuculty
+let difficulty = difficultySelect.value;
 
 function addWordToDOM() {
   randomWord = words[Math.floor(Math.random() * words.length)];
@@ -51,33 +55,57 @@ function updateScore() {
   scoreEl.innerText = score;
 }
 
+function gameOver() {
+  endgameEl.style.display = "flex";
+  const finalScore = document.getElementById("final-score");
+  finalScore.innerText = score;
+  settings.style.display = "none";
+} 
+
 text.addEventListener("input", (e) => {
   const typedWord = e.target.value;
   if (typedWord === randomWord) {
     updateScore();
     addWordToDOM();
-    time += 5;
+    if (difficulty === "easy") {
+      time += 5;
+    } else if (difficulty === "medium") {
+      time += 4;
+    } else {
+      time += 3;
+    }
     text.value = "";
   }
 });
 
+setInterval(function (updateTime) {
+  time--;
+  timeEl.innerText = time;
+  if (time === 0) {
+    clearInterval(updateTime);
+    gameOver();
+  }
+}, 1000)
+
+difficultySelect.addEventListener("change", (e) => {
+  difficulty = e.target.value;
+}
+);
 
 addWordToDOM();
 
-// lägg in if statements. T. ex if word === text ....
+/* PART 2 
 
-/* PART 1 
+Create a updateTime function using the setInterval( ) method, every time it runs it should decrement -1 from the timer. Stop the timer when it reaches zero. 
 
-Create a addWordToDOM function that will update the ”word” element with a random item from the words array 
+Create  a gameOver function that will display the end-game-container once the timer hits zero 
 
-Create a updateScore function that will increment score by +1 
+ 
 
-Add an event listener to the ”text” element. When you type in the correct word, the function should:  
+PART 3, OPTIONAL: 
 
-Call updateScore  
+Add an event listener to the settings button that will hide the settings 
 
-give the user a new word by calling addWordToDOM 
+Add an event listener for the settings form so that you can change the difficulty 
 
-increment time by 5 seconds  
-
-reset the input to empty string  */
+Set time depending on difficulty in the eventlistener */
