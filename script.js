@@ -41,9 +41,22 @@ let score = 0;
 //Initializing time
 
 let time = 10;
+const timeInterval = setInterval(updateTime, 1000);
 
 //diffiuculty
 let difficulty = difficultySelect.value;
+
+
+
+function updateTime() {
+  time--;
+  timeEl.innerText = time;
+
+  if (time === 0) {
+    clearInterval(timeInterval);
+    gameOver();
+  }
+}
 
 function addWordToDOM() {
   randomWord = words[Math.floor(Math.random() * words.length)];
@@ -56,10 +69,12 @@ function updateScore() {
 }
 
 function gameOver() {
+  endgameEl.innerHTML = `
+    <h1>Time ran out!</h1>
+    <p>Your final score is <span id="final-score">${score}</span></p>
+    <button onclick="location.reload()">Restart</button>
+  `;
   endgameEl.style.display = "flex";
-  const finalScore = document.getElementById("final-score");
-  finalScore.innerText = score;
-  settings.style.display = "none";
 } 
 
 text.addEventListener("input", (e) => {
@@ -77,15 +92,6 @@ text.addEventListener("input", (e) => {
     text.value = "";
   }
 });
-
-setInterval(function (updateTime) {
-  time--;
-  timeEl.innerText = time;
-  if (time === 0) {
-    clearInterval(updateTime);
-    gameOver();
-  }
-}, 1000)
 
 difficultySelect.addEventListener("change", (e) => {
   difficulty = e.target.value;
