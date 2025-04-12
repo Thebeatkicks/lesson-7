@@ -20,6 +20,7 @@ button {
   font-size: 14px;
   border-radius: 4px;
   padding: 5px 15px;
+  margin-top: 10px;
 }
 
 select {
@@ -92,9 +93,9 @@ h2 {
 }
 
 h1 {
-  margin: 0;
+  margin: 10px;
   padding: 10px;
-  color: #ffde17;
+  color: #17ffb6;
   font-size: 30px;
 }
 
