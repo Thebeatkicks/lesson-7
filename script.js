@@ -64,10 +64,18 @@ function addWordToDOM() {
 }
 
 function updateScore() {
+  if (difficulty === "hard") {
+    score += 3;
+  scoreEl.innerText = score;
+} else if (difficulty === "medium") {
+  score += 2;
+  scoreEl.innerText = score;
+} else  {
   score++;
   scoreEl.innerText = score;
-}
 
+}
+}
 function gameOver() {
   endgameEl.innerHTML = `
     <h1>Time ran out!</h1>
